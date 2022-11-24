@@ -7,7 +7,7 @@ const ProductsCategory = ({ category }) => {
   return (
     <div>
       <Link
-        to={`/category/${category_id}`}
+        to={`/displayProducts/${category_id}`}
         className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-gray-900 text-gray-100 cursor-pointer hover:border-green-500 hover:border-2"
       >
         <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-violet-400">
