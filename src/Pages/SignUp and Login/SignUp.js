@@ -1,13 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Contexts/AuthProvider";
 
 const SignUp = () => {
   const { register, handleSubmit } = useForm();
-  const [data, setData] = useState("");
+  const { createUser } = useContext(AuthContext);
 
   const handleSignUp = (data) => {
     console.log(data);
+    const userImage = data.userImage[0];
+    const formData = new FormData();
+    formData.append("image", userImage);
+
+    createUser(data.email, data.password);
+
+    fetch(
+      "https://api.imgbb.com/1/upload?key=c90d3252ec986b1e8a1e0a0c5b4d0806",
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
+      .then((res) => res.json())
+      .then((imgData) => console.log(imgData));
   };
 
   return (
@@ -65,9 +81,8 @@ const SignUp = () => {
               <label className="block text-gray-400">Your photo</label>
               <div className="flex">
                 <input
+                  {...register("userImage", { required: true })}
                   type="file"
-                  name="files"
-                  id="files"
                   className=" w-full px-8 py-3 border-2 border-dashed rounded-md border-gray-700 text-gray-400 bg-gray-800"
                 />
               </div>
