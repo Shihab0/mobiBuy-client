@@ -1,48 +1,74 @@
 import React from "react";
+import { CheckBadgeIcon, FlagIcon } from "@heroicons/react/24/solid";
 
-const ProductCard = () => {
+const ProductCard = ({ product }) => {
+  console.log(product);
+  const {
+    img,
+    verified,
+    seller_name,
+    used_period,
+    original_price,
+    seller_img,
+    condition,
+    location,
+    price,
+    model,
+  } = product;
+
   return (
     <div>
       <div className="rounded-md shadow-md sm:w-96 bg-gray-900 text-gray-100">
         <div className="flex items-center justify-between p-3">
           <div className="flex items-center space-x-2">
-            <img
-              src="https://source.unsplash.com/50x50/?portrait"
-              alt=""
-              className="object-cover object-center w-8 h-8 rounded-full shadow-sm bg-gray-500 border-gray-700"
-            />
+            {seller_img ? (
+              <img
+                src={seller_img}
+                alt=""
+                className="object-cover object-center w-8 h-8 rounded-full shadow-sm bg-gray-500 border-gray-700"
+              />
+            ) : (
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgkIF9X_E1VtcGW9VWChUHVqACvLmYMdOJpg&usqp=CAU"
+                alt=""
+                className="object-cover object-center w-8 h-8 rounded-full shadow-sm bg-gray-500 border-gray-700"
+              />
+            )}
             <div className="-space-y-1">
               <h2 className="text-sm font-semibold leading-none">
-                leroy_jenkins72
+                {seller_name}
               </h2>
               <span className="inline-block text-xs leading-none text-gray-400">
-                Somewhere
+                Posted: 12/20/22
               </span>
             </div>
           </div>
-          <button title="Open options" type="button">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              className="w-5 h-5 fill-current"
-            >
-              <path d="M256,144a64,64,0,1,0-64-64A64.072,64.072,0,0,0,256,144Zm0-96a32,32,0,1,1-32,32A32.036,32.036,0,0,1,256,48Z"></path>
-              <path d="M256,368a64,64,0,1,0,64,64A64.072,64.072,0,0,0,256,368Zm0,96a32,32,0,1,1,32-32A32.036,32.036,0,0,1,256,464Z"></path>
-              <path d="M256,192a64,64,0,1,0,64,64A64.072,64.072,0,0,0,256,192Zm0,96a32,32,0,1,1,32-32A32.036,32.036,0,0,1,256,288Z"></path>
-            </svg>
-          </button>
+          <div title="Verified seller">
+            {verified ? (
+              <>
+                <p className="text-blue-400">
+                  <CheckBadgeIcon className=" w-6 inline" />
+                  Verified
+                </p>
+              </>
+            ) : (
+              <>
+                <p>Not verified</p>
+              </>
+            )}
+          </div>
         </div>
         <img
-          src="https://source.unsplash.com/301x301/?random"
+          src={img}
           alt=""
-          className="object-cover object-center w-full h-72 bg-gray-500"
+          className="object-cover object-center w-full h-80 bg-gray-500"
         />
         <div className="p-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <button
                 type="button"
-                title="Like post"
+                title="Wish list"
                 className="flex items-center justify-center"
               >
                 <svg
@@ -82,54 +108,39 @@ const ProductCard = () => {
             </div>
             <button
               type="button"
-              title="Bookmark post"
+              title="Report to admin"
               className="flex items-center justify-center"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-                className="w-5 h-5 fill-current"
-              >
-                <path d="M424,496H388.75L256.008,381.19,123.467,496H88V16H424ZM120,48V456.667l135.992-117.8L392,456.5V48Z"></path>
-              </svg>
+              <FlagIcon className="w-5 h-5 fill-current text-red-600" />
             </button>
           </div>
-          <div className="flex flex-wrap items-center pt-3 pb-1">
-            <div className="flex items-center space-x-2">
-              <div className="flex -space-x-1">
-                <img
-                  alt=""
-                  className="w-5 h-5 border rounded-full bg-gray-500 border-gray-800"
-                  src="https://source.unsplash.com/40x40/?portrait?1"
-                />
-                <img
-                  alt=""
-                  className="w-5 h-5 border rounded-full bg-gray-500 border-gray-800"
-                  src="https://source.unsplash.com/40x40/?portrait?2"
-                />
-                <img
-                  alt=""
-                  className="w-5 h-5 border rounded-full bg-gray-500 border-gray-800"
-                  src="https://source.unsplash.com/40x40/?portrait?3"
-                />
-              </div>
-              <span className="text-sm">
-                Liked by
-                <span className="font-semibold">Mamba UI</span>and
-                <span className="font-semibold">86 others</span>
-              </span>
-            </div>
+          <div>
+            <p className="text-xl">
+              <strong>
+                {model} ({condition}){" "}
+              </strong>
+            </p>
+            <p>
+              <span className="font-semibold">Location: </span>
+              {location}
+            </p>
+            <p>
+              <span className="font-semibold">Used period: </span>
+              {used_period}
+            </p>
+            <p>
+              <span className="font-semibold">Original price: </span>
+              {original_price} TK
+            </p>
           </div>
           <div className="space-y-3">
             <p className="text-sm">
-              <span className="text-base font-semibold">leroy_jenkins72</span>
-              Nemo ea quasi debitis impedit!
+              <span className="text-base font-bold">Price: </span>
+              <span className="text-xl text-yellow-400">{price} TK</span>
             </p>
-            <input
-              type="text"
-              placeholder="Add a comment..."
-              className="w-full py-0.5 bg-transparent border-none rounded text-sm pl-0 text-gray-100"
-            />
+            <button className="w-full py-0.5 btn btn-primary border-none rounded text-sm pl-0 text-gray-100">
+              Book Now{" "}
+            </button>
           </div>
         </div>
       </div>
