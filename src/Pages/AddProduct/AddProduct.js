@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
 import { AuthContext } from "../../Contexts/AuthProvider";
 
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -68,6 +71,7 @@ const AddProduct = () => {
               console.log(data);
               if (data.acknowledged) {
                 toast.success("Your product successfully added.");
+                navigate(`/displayProducts/${product.category_id}`);
               }
             });
         }

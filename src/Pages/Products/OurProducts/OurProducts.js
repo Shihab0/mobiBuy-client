@@ -14,7 +14,7 @@ const OurProducts = () => {
 
   return (
     <div className="my-16">
-      <h2 className="md:text-5xl text-4xl font-bold text-center underline underline-offset-8 text-white">
+      <h2 className="md:text-5xl text-4xl font-bold text-center  underline-offset-8 text-white">
         {" "}
         Our Product Categories
       </h2>

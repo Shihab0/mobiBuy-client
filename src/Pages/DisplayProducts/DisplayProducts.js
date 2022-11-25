@@ -25,7 +25,7 @@ const DisplayProducts = () => {
       <h3 className="text-center text-4xl font-bold text-white mt-10 mb-14 underline underline-offset-8">
         Chose you want to buy
       </h3>
-      <div className="mx-3 md:grid grid-cols-3">
+      <div className="mx-3 md:grid grid-cols-3 gap-y-5">
         {products &&
           products.map((product) => (
             <ProductCard key={product._id} product={product}></ProductCard>
