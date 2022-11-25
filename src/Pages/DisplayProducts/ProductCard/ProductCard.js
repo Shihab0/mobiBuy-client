@@ -14,6 +14,7 @@ const ProductCard = ({ product }) => {
     location,
     price,
     model,
+    posted_date,
   } = product;
 
   return (
@@ -39,7 +40,7 @@ const ProductCard = ({ product }) => {
                 {seller_name}
               </h2>
               <span className="inline-block text-xs leading-none text-gray-400">
-                Posted: 12/20/22
+                <span className="font-semibold"> Posted on:</span> {posted_date}
               </span>
             </div>
           </div>

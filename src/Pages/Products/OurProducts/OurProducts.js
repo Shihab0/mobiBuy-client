@@ -16,7 +16,7 @@ const OurProducts = () => {
     <div className="my-16">
       <h2 className="md:text-5xl text-4xl font-bold text-center underline underline-offset-8 text-white">
         {" "}
-        Our Products
+        Our Product Categories
       </h2>
       <p className="text-white font-semibold text-center mt-4">
         Click on your favorite brand

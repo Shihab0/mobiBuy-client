@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { AuthContext } from "../../Contexts/AuthProvider";
 
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
-  console.log(user);
+
   const {
     register,
     formState: { errors },
@@ -42,7 +43,7 @@ const AddProduct = () => {
           const product = {
             model: data.model,
             condition: data.condition,
-            category: data.category,
+            category_id: data.category,
             location: data.address,
             original_price: data.original_price,
             price: data.selling_price,
@@ -54,7 +55,21 @@ const AddProduct = () => {
             seller_name: user.displayName,
             email: user.email,
           };
-          console.log(product);
+
+          fetch("http://localhost:5000/addProduct", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(product),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              if (data.acknowledged) {
+                toast.success("Your product successfully added.");
+              }
+            });
         }
       });
   };
