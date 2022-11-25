@@ -5,11 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider";
 
 const SignUp = () => {
-  const { register, handleSubmit, loading } = useForm();
+  const { register, handleSubmit } = useForm();
   const { createUser, updateUser } = useContext(AuthContext);
   const navigate = useNavigate();
   let userImg = "";
-  console.log(loading);
 
   const handleSignUp = (data) => {
     const userImage = data.userImage[0];
@@ -139,16 +138,13 @@ const SignUp = () => {
               </div>
             </fieldset>
           </div>
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            <button
-              type="submit"
-              className="block w-full p-3 text-center rounded-sm text-gray-900 bg-violet-400"
-            >
-              Sign up
-            </button>
-          )}
+
+          <button
+            type="submit"
+            className="block w-full p-3 text-center rounded-sm text-gray-900 bg-violet-400"
+          >
+            Sign up
+          </button>
         </form>
         <div className="flex items-center pt-4 space-x-1">
           <div className="flex-1 h-px sm:w-16 bg-gray-700"></div>

@@ -4,7 +4,7 @@ import { CheckBadgeIcon, FlagIcon } from "@heroicons/react/24/solid";
 const ProductCard = ({ product }) => {
   console.log(product);
   const {
-    img,
+    product_img,
     verified,
     seller_name,
     used_period,
@@ -59,7 +59,7 @@ const ProductCard = ({ product }) => {
           </div>
         </div>
         <img
-          src={img}
+          src={product_img}
           alt=""
           className="object-cover object-center w-full h-80 bg-gray-500"
         />
