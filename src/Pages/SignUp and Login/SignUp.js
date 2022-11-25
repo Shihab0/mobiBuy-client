@@ -1,33 +1,84 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider";
 
 const SignUp = () => {
-  const { register, handleSubmit } = useForm();
-  const { createUser } = useContext(AuthContext);
+  const { register, handleSubmit, loading } = useForm();
+  const { createUser, updateUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  let userImg = "";
+  console.log(loading);
 
   const handleSignUp = (data) => {
-    console.log(data);
     const userImage = data.userImage[0];
     const formData = new FormData();
     formData.append("image", userImage);
 
-    createUser(data.email, data.password);
+    console.log(userImg);
 
-    fetch(
-      "https://api.imgbb.com/1/upload?key=c90d3252ec986b1e8a1e0a0c5b4d0806",
-      {
-        method: "POST",
-        body: formData,
-      }
-    )
-      .then((res) => res.json())
-      .then((imgData) => console.log(imgData));
+    createUser(data.email, data.password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        const userProfile = {
+          displayName: data.name,
+        };
+
+        updateUser(userProfile).then(() => {
+          fetch(
+            "https://api.imgbb.com/1/upload?key=c90d3252ec986b1e8a1e0a0c5b4d0806",
+            {
+              method: "POST",
+              body: formData,
+            }
+          )
+            .then((res) => res.json())
+            .then((imgData) => {
+              if (imgData.success) {
+                const userImage = imgData.data.display_url;
+                userImg = userImage;
+                const users = {
+                  name: data.name,
+                  email: data.email,
+                  userImg: userImg,
+                  role: data.role,
+                };
+
+                const userProfile = {
+                  photoURL: userImg,
+                };
+
+                updateUser(userProfile)
+                  .then(() => {
+                    toast.success("Your account successfully created");
+                    navigate("/");
+                  })
+                  .catch();
+
+                fetch("http://localhost:5000/users", {
+                  method: "POST",
+                  headers: {
+                    "content-type": "application/json",
+                  },
+                  body: JSON.stringify(users),
+                })
+                  .then((res) => res.json())
+                  .then((data) => {
+                    console.log(data);
+                    if (data.acknowledged) {
+                    }
+                  });
+              }
+            });
+        });
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
-    <div className="bg-gray-900 pt-16 pb-16">
+    <div className="bg-gray-900 pt-10 pb-16">
       <div className="w-full border border-gray-400 mx-auto max-w-md p-8 space-y-3 rounded-xl bg-gray-900 text-gray-100">
         <h1 className="text-2xl font-bold text-center">Sign Up</h1>
         <form
@@ -35,7 +86,7 @@ const SignUp = () => {
           action=""
           className="space-y-6 ng-untouched ng-pristine ng-valid"
         >
-          <div className="space-y-1 text-sm">
+          <div className=" text-sm">
             <label className="block text-gray-400">Name</label>
             <input
               {...register("name", { required: true })}
@@ -44,7 +95,7 @@ const SignUp = () => {
               className="w-full px-4 py-3 rounded-md border border-gray-600 bg-gray-900 text-gray-100 focus:border-violet-400"
             />
           </div>
-          <div className="space-y-1 text-sm">
+          <div className=" text-sm">
             <label className="block text-gray-400">Email</label>
             <input
               {...register("email", { required: true })}
@@ -54,7 +105,7 @@ const SignUp = () => {
             />
           </div>
 
-          <div className="space-y-1 text-sm">
+          <div className=" text-sm">
             <label htmlFor="password" className="block text-gray-400">
               What type of account you want?
             </label>
@@ -67,7 +118,7 @@ const SignUp = () => {
             </select>
           </div>
 
-          <div className="space-y-1 text-sm">
+          <div className=" text-sm">
             <label htmlFor="password" className="block text-gray-400">
               Password
             </label>
@@ -77,7 +128,7 @@ const SignUp = () => {
               placeholder="Password"
               className="w-full px-4 py-3 rounded-md border border-gray-600 bg-gray-900 text-gray-100 focus:border-violet-400"
             />
-            <fieldset className="w-full space-y-1 pt-2 text-gray-100">
+            <fieldset className="w-full  pt-2 text-gray-100">
               <label className="block text-gray-400">Your photo</label>
               <div className="flex">
                 <input
@@ -88,12 +139,16 @@ const SignUp = () => {
               </div>
             </fieldset>
           </div>
-          <button
-            type="submit"
-            className="block w-full p-3 text-center rounded-sm text-gray-900 bg-violet-400"
-          >
-            Sign up
-          </button>
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <button
+              type="submit"
+              className="block w-full p-3 text-center rounded-sm text-gray-900 bg-violet-400"
+            >
+              Sign up
+            </button>
+          )}
         </form>
         <div className="flex items-center pt-4 space-x-1">
           <div className="flex-1 h-px sm:w-16 bg-gray-700"></div>
