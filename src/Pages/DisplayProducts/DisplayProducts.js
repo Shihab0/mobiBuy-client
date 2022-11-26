@@ -1,4 +1,3 @@
-// import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useLoaderData } from "react-router-dom";
 import AdsSection from "./AdsSection/AdsSection";
@@ -7,15 +6,15 @@ import ProductCard from "./ProductCard/ProductCard";
 const DisplayProducts = () => {
   const products = useLoaderData();
 
-  //   const { data: products = [] } = useQuery({
-  //     queryKey: ["products"],
-  //     queryFn: async () => {
-  //       const res = await fetch("http://localhost:5000/products/1");
-  //       const data = await res.json();
-  //       return data;
-  //     },
-  //   });
-  //   console.log(products);
+  // const { data: products = [] } = useQuery({
+  //   queryKey: ["products"],
+  //   queryFn: async () => {
+  //     const res = await fetch("http://localhost:5000/products/1");
+  //     const data = await res.json();
+  //     return data;
+  //   },
+  // });
+  // console.log(products);
 
   return (
     <div className="bg-gray-800 my-3 p-6">

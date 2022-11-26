@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { AuthContext } from "../Contexts/AuthProvider";
@@ -6,6 +7,17 @@ import Navbar from "../Shared/Navbar/Navbar";
 
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
+
+  const { data: loadUser = [] } = useQuery({
+    queryKey: ["loadUser"],
+    queryFn: async () => {
+      const res = await fetch(
+        `http://localhost:5000/loadUser?email=${user?.email}`
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
 
   return (
     <div>
@@ -38,9 +50,13 @@ const DashboardLayout = () => {
                   <h2 className="text-xl font-semibold sm:text-2xl">
                     {user?.displayName}
                   </h2>
-                  <button className="btn btn-sm btn-success">
-                    Request for verify
-                  </button>
+                  {user.role === "seller" ? (
+                    <button className="btn btn-sm btn-success">
+                      Request for verify
+                    </button>
+                  ) : (
+                    <button className="btn btn-sm btn-success">Admin</button>
+                  )}
                 </div>
                 <div className="flex justify-center pt-2 space-x-4 align-center"></div>
               </div>

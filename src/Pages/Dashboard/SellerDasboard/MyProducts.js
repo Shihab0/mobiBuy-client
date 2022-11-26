@@ -1,6 +1,30 @@
-import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import React, { useContext } from "react";
+import Loading from "../../../Components/Loading";
+import { AuthContext } from "../../../Contexts/AuthProvider";
 
 const MyProducts = () => {
+  const { user } = useContext(AuthContext);
+
+  const {
+    data: myProducts = [],
+    isLoading,
+    isFetching,
+  } = useQuery({
+    queryKey: ["myProducts"],
+    queryFn: async () => {
+      const res = await fetch(
+        `http://localhost:5000/dashboard/myProducts?email=${user?.email}`
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
+  console.log(myProducts);
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
+
   return (
     <div className="">
       <h2 className="text-2xl  text-gray-50 p-3">My Products</h2>
@@ -11,31 +35,39 @@ const MyProducts = () => {
               <tr>
                 <th></th>
                 <th>Name</th>
-                <th>Job</th>
-                <th>Favorite Color</th>
+                <th>Original Price</th>
+                <th>Selling Price</th>
+                <th>Selling Status</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th>1</th>
-                <td>Cy Ganderton</td>
-                <td>Quality Control Specialist</td>
-                <td>Blue</td>
-              </tr>
-
-              <tr className="hover">
-                <th>2</th>
-                <td>Hart Hagerty</td>
-                <td>Desktop Support Technician</td>
-                <td>Purple</td>
-              </tr>
-
-              <tr>
-                <th>3</th>
-                <td>Brice Swyre</td>
-                <td>Tax Accountant</td>
-                <td>Red</td>
-              </tr>
+              {isFetching ? (
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-4 h-4 rounded-full animate-pulse bg-violet-400"></div>
+                  <div className="w-4 h-4 rounded-full animate-pulse bg-violet-400"></div>
+                  <div className="w-4 h-4 rounded-full animate-pulse bg-violet-400"></div>
+                </div>
+              ) : null}
+              {myProducts &&
+                myProducts.map((myProduct, i) => (
+                  <tr key={myProduct._id} className="hover">
+                    <th>{i + 1}</th>
+                    <td>{myProduct.model}</td>
+                    <td>{myProduct.original_price}</td>
+                    <td>{myProduct.price}</td>
+                    {myProduct.status ? (
+                      <td>{myProduct?.status}</td>
+                    ) : (
+                      <td className="text-green-500">Available</td>
+                    )}
+                    <td>
+                      <button className="btn btn-sm hover:bg-red-700">
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
