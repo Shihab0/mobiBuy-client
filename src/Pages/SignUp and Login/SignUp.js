@@ -5,7 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider";
 
 const SignUp = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
   const { createUser, updateUser } = useContext(AuthContext);
   const navigate = useNavigate();
   let userImg = "";
@@ -43,6 +47,7 @@ const SignUp = () => {
                   email: data.email,
                   userImg: userImg,
                   role: data.role,
+                  verified: "false",
                 };
 
                 const userProfile = {
@@ -97,11 +102,14 @@ const SignUp = () => {
           <div className=" text-sm">
             <label className="block text-gray-400">Email</label>
             <input
-              {...register("email", { required: true })}
+              {...register("email", { required: "Email is required" })}
               type="text"
               placeholder="email"
               className="w-full px-4 py-3 rounded-md border border-gray-600 bg-gray-900 text-gray-100 focus:border-violet-400"
             />
+            {errors.email && (
+              <p className="text-red-600">{errors.email.message}</p>
+            )}
           </div>
 
           <div className=" text-sm">

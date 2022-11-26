@@ -1,15 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../Assest/Image/logo.png";
 import { AuthContext } from "../../Contexts/AuthProvider";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [loadedUser, setLoadedUser] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/dashboard?email=${user?.email}`)
+      .then((res) => res.json())
+      .then((data) => setLoadedUser(data))
+      .catch((err) => console.log(err));
+  }, [user?.email]);
 
   const handleLogOut = () => {
     logOut().then(() => {
       toast.success("successfully logout");
+      navigate("/");
     });
   };
 
@@ -28,7 +38,11 @@ const Navbar = () => {
       </li>
       <li>
         {" "}
-        <Link to="/dashboard/seller">Dashboard</Link>
+        {loadedUser.role === "seller" ? (
+          <Link to="/dashboard/seller">Dashboard</Link>
+        ) : (
+          <Link to="/dashboard/users">Dashboard</Link>
+        )}
       </li>
       <li>
         <Link to="/about">About</Link>
@@ -38,9 +52,14 @@ const Navbar = () => {
           <Link onClick={handleLogOut}>Logout</Link>
         </li>
       ) : (
-        <li>
-          <Link to="/signup">Signup</Link>
-        </li>
+        <>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/signup">Signup</Link>
+          </li>
+        </>
       )}
     </>
   );

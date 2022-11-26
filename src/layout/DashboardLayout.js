@@ -1,23 +1,23 @@
-import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
+import {
+  CheckBadgeIcon,
+  ExclamationTriangleIcon,
+} from "@heroicons/react/24/solid";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { AuthContext } from "../Contexts/AuthProvider";
 import Footer from "../Shared/Footer/Footer";
 import Navbar from "../Shared/Navbar/Navbar";
 
 const DashboardLayout = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loadedUser } = useContext(AuthContext);
 
-  const { data: loadUser = [] } = useQuery({
-    queryKey: ["loadUser"],
-    queryFn: async () => {
-      const res = await fetch(
-        `http://localhost:5000/loadUser?email=${user?.email}`
-      );
-      const data = await res.json();
-      return data;
-    },
-  });
+  // const [loadedUser, setLoadedUser] = useState([]);
+  // useEffect(() => {
+  //   fetch(`http://localhost:5000/dashboard?email=${user?.email}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setLoadedUser(data))
+  //     .catch((err) => console.log(err));
+  // }, [user?.email]);
 
   return (
     <div>
@@ -29,9 +29,15 @@ const DashboardLayout = () => {
           className="drawer-toggle"
         />
         <div className="drawer-content mt-3">
-          <h2 className="text-center text-3xl text-gray-50">
-            Seller can control data
-          </h2>
+          {loadedUser?.role === "admin" ? (
+            <h2 className="text-center text-3xl text-gray-50">
+              Admin can control data
+            </h2>
+          ) : (
+            <h2 className="text-center text-3xl text-gray-50">
+              Seller can control data
+            </h2>
+          )}
           <div className="divider border border-gray-700"></div>
           <Outlet></Outlet>
         </div>
@@ -50,22 +56,42 @@ const DashboardLayout = () => {
                   <h2 className="text-xl font-semibold sm:text-2xl">
                     {user?.displayName}
                   </h2>
-                  {user.role === "seller" ? (
-                    <button className="btn btn-sm btn-success">
-                      Request for verify
-                    </button>
+                  {loadedUser?.role === "seller" ? (
+                    <>
+                      {loadedUser?.verified === "true" ? (
+                        <button className="btn btn-sm bg-blue-800">
+                          <CheckBadgeIcon className=" w-6" />
+                          Verified seller
+                        </button>
+                      ) : (
+                        <button className="btn btn-sm bg-red-600 hover:bg-green-600">
+                          <ExclamationTriangleIcon className="text-yellow-400 w-6 " />
+                          Request for verify
+                        </button>
+                      )}
+                    </>
                   ) : (
-                    <button className="btn btn-sm btn-success">Admin</button>
+                    <button className="btn btn-sm bg-blue-800">
+                      <CheckBadgeIcon className=" w-6" /> Admin
+                    </button>
                   )}
                 </div>
                 <div className="flex justify-center pt-2 space-x-4 align-center"></div>
               </div>
             </div>
             <li>
-              <Link to="/dashboard/myProducts">My Products</Link>
+              {loadedUser?.role === "seller" ? (
+                <Link to="/dashboard/myProducts">My Products</Link>
+              ) : (
+                <Link to="/dashboard/users">All Users</Link>
+              )}
             </li>
             <li>
-              <a>Sidebar Item 2</a>
+              {loadedUser.role === "admin" ? (
+                <Link>Reported Products </Link>
+              ) : (
+                <Link>Customer message</Link>
+              )}
             </li>
           </ul>
         </div>
