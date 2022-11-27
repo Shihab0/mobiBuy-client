@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CheckBadgeIcon, FlagIcon } from "@heroicons/react/24/solid";
 
 const ProductCard = ({ product, setBookingProduct }) => {
-  console.log(product);
+  const [seller, setSeller] = useState("");
+
   const {
     product_img,
     verified,
@@ -15,7 +16,17 @@ const ProductCard = ({ product, setBookingProduct }) => {
     price,
     model,
     posted_date,
+    email,
   } = product;
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/seller?email=${email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setSeller(data[0]);
+        console.log(data[0], "data seller");
+      });
+  }, [email]);
 
   return (
     <div>
@@ -45,7 +56,7 @@ const ProductCard = ({ product, setBookingProduct }) => {
             </div>
           </div>
           <div title="Verified seller">
-            {verified ? (
+            {seller?.verified ? (
               <>
                 <p className="text-blue-400">
                   <CheckBadgeIcon className=" w-6 inline" />

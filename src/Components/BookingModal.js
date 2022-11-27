@@ -1,16 +1,9 @@
 import React, { useContext } from "react";
-import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { AuthContext } from "../Contexts/AuthProvider";
 
 const BookingModal = ({ bookingProduct }) => {
   const { user } = useContext(AuthContext);
-  const {
-    register,
-    resetField,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
 
   const date = new Date();
   const day = date.getDate();
@@ -34,6 +27,7 @@ const BookingModal = ({ bookingProduct }) => {
       number,
       bookingDate: currentDate,
       productName: bookingProduct.model,
+      seller_email: bookingProduct.email,
     };
 
     fetch("http://localhost:5000/booking", {
@@ -49,9 +43,7 @@ const BookingModal = ({ bookingProduct }) => {
           toast.success("Booking success");
           form.reset();
         }
-        console.log(data);
       });
-    console.log(bookingDetails);
   };
 
   return (
@@ -109,9 +101,7 @@ const BookingModal = ({ bookingProduct }) => {
               placeholder="Enter address you want to meet"
               className="input input-bordered w-full "
             />
-            {errors.location && (
-              <p className="text-xs text-red-700">{errors.location.message}</p>
-            )}
+
             <input
               type="submit"
               value="Book Now"

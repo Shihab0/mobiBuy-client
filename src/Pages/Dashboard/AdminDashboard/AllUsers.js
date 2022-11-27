@@ -25,6 +25,19 @@ const AllUsers = () => {
       });
   };
 
+  const handleVerify = (id) => {
+    fetch(`http://localhost:5000/seller/makeVerify/${id}`, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount) {
+          toast.success("successfully verified");
+          refetch();
+        }
+      });
+  };
+
   return (
     <div>
       <h1 className="text-2xl ml-3">All users</h1>
@@ -38,6 +51,7 @@ const AllUsers = () => {
                 <th>Email</th>
                 <th>Role</th>
                 <th>Make Admin</th>
+                <th>Verify</th>
                 <th>Delete</th>
               </tr>
             </thead>
@@ -109,6 +123,23 @@ const AllUsers = () => {
                           Admin
                         </button>
                       )}
+                    </th>
+                    <th>
+                      {displayUser.role === "seller" &&
+                        displayUser.verified !== "true" && (
+                          <button
+                            onClick={() => handleVerify(displayUser._id)}
+                            className="btn btn-primary btn-sm"
+                          >
+                            Verify
+                          </button>
+                        )}
+                      {displayUser.role === "seller" &&
+                        displayUser.verified === "true" && (
+                          <button className="btn cursor-not-allowed bg-blue-600 hover:bg-blue-600 disabled btn-sm">
+                            <CheckCircleIcon className="w-4 h-4 " /> Verified
+                          </button>
+                        )}
                     </th>
                     <th>
                       <button className="btn btn-circle btn-sm">

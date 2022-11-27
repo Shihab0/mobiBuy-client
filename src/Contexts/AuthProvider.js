@@ -8,7 +8,6 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { set } from "react-hook-form";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
