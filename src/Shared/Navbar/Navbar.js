@@ -96,7 +96,7 @@ const Navbar = () => {
             {menuItems}
           </ul>
         </div>
-        <Link className="btn btn-ghost normal-case text-xl">
+        <Link to="/" className="btn btn-ghost normal-case text-xl">
           {" "}
           <img className=" rounded-3xl w-14 h-14" src={logo} alt="/"></img>{" "}
           <span className="text-2xl font-bold ml-3"> mobiBuy</span>{" "}

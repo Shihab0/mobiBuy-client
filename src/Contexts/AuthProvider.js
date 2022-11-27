@@ -8,6 +8,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import { set } from "react-hook-form";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
@@ -39,7 +40,9 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     fetch(`http://localhost:5000/dashboard?email=${user?.email}`)
       .then((res) => res.json())
-      .then((data) => setLoadedUser(data))
+      .then((data) => {
+        setLoadedUser(data);
+      })
       .catch((err) => console.log(err));
   }, [user?.email]);
 
@@ -60,6 +63,7 @@ const AuthProvider = ({ children }) => {
     updateUser,
     loading,
     logOut,
+    setLoading,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

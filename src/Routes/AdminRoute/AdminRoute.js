@@ -4,14 +4,14 @@ import Loading from "../../Components/Loading";
 import { AuthContext } from "../../Contexts/AuthProvider";
 
 const AdminRoute = ({ children }) => {
-  const { user, loadedUser, loading } = useContext(AuthContext);
+  const { loadedUser } = useContext(AuthContext);
   const location = useLocation();
 
-  if (loading) {
+  if (loadedUser.length === 0) {
     return <Loading></Loading>;
   }
 
-  if (!user || loadedUser.role !== "admin") {
+  if (loadedUser.role !== "admin") {
     return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
   }
 

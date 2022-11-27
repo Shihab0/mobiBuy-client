@@ -1,7 +1,7 @@
 import React from "react";
 import { CheckBadgeIcon, FlagIcon } from "@heroicons/react/24/solid";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, setBookingProduct }) => {
   console.log(product);
   const {
     product_img,
@@ -139,9 +139,13 @@ const ProductCard = ({ product }) => {
               <span className="text-base font-bold">Price: </span>
               <span className="text-xl text-yellow-400">{price} TK</span>
             </p>
-            <button className="w-full py-0.5 btn btn-primary border-none rounded text-sm pl-0 text-gray-100">
+            <label
+              htmlFor="booking-modal"
+              onClick={() => setBookingProduct(product)}
+              className="w-full py-0.5 btn btn-primary border-none rounded text-sm pl-0 text-gray-100"
+            >
               Book Now{" "}
-            </button>
+            </label>
           </div>
         </div>
       </div>

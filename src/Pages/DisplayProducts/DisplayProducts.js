@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import BookingModal from "../../Components/BookingModal";
 import OurProducts from "../Products/OurProducts/OurProducts";
 import AdsSection from "./AdsSection/AdsSection";
 import ProductCard from "./ProductCard/ProductCard";
 
 const DisplayProducts = () => {
   const products = useLoaderData();
+  const [bookingProduct, setBookingProduct] = useState(null);
 
   // const { data: products = [] } = useQuery({
   //   queryKey: ["products"],
@@ -31,9 +33,16 @@ const DisplayProducts = () => {
       <div className="mx-3 md:grid grid-cols-3 gap-y-5">
         {products &&
           products.map((product) => (
-            <ProductCard key={product._id} product={product}></ProductCard>
+            <ProductCard
+              key={product._id}
+              product={product}
+              setBookingProduct={setBookingProduct}
+            ></ProductCard>
           ))}
       </div>
+      {bookingProduct && (
+        <BookingModal bookingProduct={bookingProduct}></BookingModal>
+      )}
     </div>
   );
 };
