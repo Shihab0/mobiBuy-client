@@ -29,18 +29,23 @@ const Navbar = () => {
         {" "}
         <Link to="/"> Home </Link>
       </li>
-      <li>
-        <Link to="/orders">My Order</Link>
-      </li>
+      {loadedUser.role !== "admin" && loadedUser.role !== "seller" && user && (
+        <li>
+          <Link to="/orders">My Order</Link>
+        </li>
+      )}
+      {loadedUser.role === "seller" && (
+        <li>
+          {" "}
+          <Link to="/AddProduct">Add product</Link>
+        </li>
+      )}
       <li>
         {" "}
-        <Link to="/AddProduct">Add product</Link>
-      </li>
-      <li>
-        {" "}
-        {loadedUser.role === "seller" ? (
+        {loadedUser.role === "seller" && (
           <Link to="/dashboard/seller">Dashboard</Link>
-        ) : (
+        )}
+        {loadedUser.role === "admin" && (
           <Link to="/dashboard/users">Dashboard</Link>
         )}
       </li>
@@ -65,7 +70,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-slate-700 flex justify-between text-white py-4">
+    <div className="navbar bg-slate-700 flex justify-between text-white py-5 ">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">

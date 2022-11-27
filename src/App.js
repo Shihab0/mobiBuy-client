@@ -5,9 +5,11 @@ import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
-    <div className="max-w-[1440px] mx-auto bg-slate-700">
-      <Toaster></Toaster>
-      <RouterProvider router={router}></RouterProvider>
+    <div className="bg-slate-700">
+      <div className="max-w-[1440px] mx-auto ">
+        <Toaster></Toaster>
+        <RouterProvider router={router}></RouterProvider>
+      </div>
     </div>
   );
 }

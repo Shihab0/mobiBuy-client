@@ -1,10 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import Loading from "../../Components/Loading";
 import { AuthContext } from "../../Contexts/AuthProvider";
 
 const SignUp = () => {
+  const [loader, setLoader] = useState(false);
+
   const {
     register,
     formState: { errors },
@@ -15,6 +18,7 @@ const SignUp = () => {
   let userImg = "";
 
   const handleSignUp = (data) => {
+    setLoader(true);
     const userImage = data.userImage[0];
     const formData = new FormData();
     formData.append("image", userImage);
@@ -56,6 +60,7 @@ const SignUp = () => {
 
                 updateUser(userProfile)
                   .then(() => {
+                    setLoader(false);
                     toast.success("Your account successfully created");
                     navigate("/");
                   })
@@ -146,13 +151,16 @@ const SignUp = () => {
               </div>
             </fieldset>
           </div>
-
-          <button
-            type="submit"
-            className="block w-full p-3 text-center rounded-sm text-gray-900 bg-violet-400"
-          >
-            Sign up
-          </button>
+          {loader ? (
+            <Loading></Loading>
+          ) : (
+            <button
+              type="submit"
+              className="block w-full p-3 text-center rounded-sm text-gray-900 bg-violet-400"
+            >
+              Sign up
+            </button>
+          )}
         </form>
         <div className="flex items-center pt-4 space-x-1">
           <div className="flex-1 h-px sm:w-16 bg-gray-700"></div>

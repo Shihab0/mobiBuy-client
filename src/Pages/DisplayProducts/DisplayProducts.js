@@ -1,5 +1,6 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
+import OurProducts from "../Products/OurProducts/OurProducts";
 import AdsSection from "./AdsSection/AdsSection";
 import ProductCard from "./ProductCard/ProductCard";
 
@@ -20,6 +21,9 @@ const DisplayProducts = () => {
     <div className="bg-gray-800 my-3 p-6">
       <div>
         <AdsSection></AdsSection>
+      </div>
+      <div>
+        <OurProducts></OurProducts>
       </div>
       <h3 className="text-center text-4xl font-bold text-white mt-10 mb-14 underline underline-offset-8">
         Chose you want to buy

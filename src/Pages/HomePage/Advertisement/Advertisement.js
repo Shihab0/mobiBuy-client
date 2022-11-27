@@ -1,3 +1,4 @@
+import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 import React, { useEffect, useState } from "react";
 
 const Advertisement = () => {
@@ -31,15 +32,42 @@ const Advertisement = () => {
                 />
                 <div className="mt-6 mb-2">
                   <span className="block text-xs font-medium tracking-widest uppercase text-violet-400">
-                    Quisque
+                    <p className="text-xs">
+                      {advertisedProduct.seller_name}
+                      <CheckBadgeIcon
+                        title="verified"
+                        className=" w-4 inline"
+                      />
+                    </p>
                   </span>
-                  <h2 className="text-xl font-semibold tracking-wide">
-                    {advertisedProduct.model}
-                  </h2>
+                  <p className="text-xl">
+                    <strong>
+                      {advertisedProduct.model} ({advertisedProduct.condition}){" "}
+                    </strong>
+                  </p>
+                  <p>
+                    <span className="font-semibold">Location: </span>
+                    {advertisedProduct.location}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Used period: </span>
+                    {advertisedProduct.used_period}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Original price: </span>
+                    {advertisedProduct.original_price} TK
+                  </p>
+                  <p className="text-sm">
+                    <span className="text-base font-bold">Price: </span>
+                    <span className="text-xl text-yellow-400">
+                      {advertisedProduct.price} TK
+                    </span>
+                  </p>
                 </div>
-                <p className="text-gray-100">
-                  Mauris et lorem at elit tristique dignissim et ullamcorper
-                  elit. In sed feugiat mi. Etiam ut lacinia dui.
+                <p>
+                  <button className="w-full py-0.5  btn btn-primary border-none rounded text-sm pl-0 text-gray-100">
+                    Book Now{" "}
+                  </button>
                 </p>
               </div>
             </div>
