@@ -10,6 +10,7 @@ import Home from "../../Pages/HomePage/Home/Home";
 import MyOrders from "../../Pages/MyOrders/MyOrders";
 import Login from "../../Pages/SignUp and Login/Login";
 import SignUp from "../../Pages/SignUp and Login/SignUp";
+import PrivateRoute from "../PrivateRoutes/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -50,7 +51,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout></DashboardLayout>,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/dashboard/seller",

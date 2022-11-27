@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
+import toast from "react-hot-toast";
 import Loading from "../../../Components/Loading";
 import { AuthContext } from "../../../Contexts/AuthProvider";
 
@@ -10,6 +11,7 @@ const MyProducts = () => {
     data: myProducts = [],
     isLoading,
     isFetching,
+    refetch,
   } = useQuery({
     queryKey: ["myProducts"],
     queryFn: async () => {
@@ -20,7 +22,20 @@ const MyProducts = () => {
       return data;
     },
   });
-  console.log(myProducts);
+
+  const handelBoost = (id) => {
+    fetch(`http://localhost:5000/boost/${id}`, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount) {
+          toast.success("This product set to Advertisement section");
+          refetch();
+        }
+      });
+  };
+
   if (isLoading) {
     return <Loading></Loading>;
   }
@@ -38,6 +53,7 @@ const MyProducts = () => {
                 <th>Original Price</th>
                 <th>Selling Price</th>
                 <th>Selling Status</th>
+                <th>Boost</th>
                 <th>Delete</th>
               </tr>
             </thead>
@@ -61,6 +77,20 @@ const MyProducts = () => {
                     ) : (
                       <td className="text-green-500">Available</td>
                     )}
+                    <td>
+                      {myProduct.advertised ? (
+                        <button className="btn btn-sm bg-blue-700 hover:bg-blue-700 disabled cursor-not-allowed">
+                          Boosted
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handelBoost(myProduct._id)}
+                          className="btn btn-sm bg-green-700 hover:bg-green-900"
+                        >
+                          Boost
+                        </button>
+                      )}
+                    </td>
                     <td>
                       <button className="btn btn-sm hover:bg-red-700">
                         Delete

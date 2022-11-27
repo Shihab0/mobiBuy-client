@@ -1,8 +1,9 @@
 import { CheckBadgeIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
 import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const AllUsers = () => {
-  const { data: users = [] } = useQuery({
+  const { data: users = [], refetch } = useQuery({
     queryKey: ["allUsers"],
     queryFn: async () => {
       const res = await fetch(`http://localhost:5000/dashboard/users`);
@@ -10,7 +11,19 @@ const AllUsers = () => {
       return data;
     },
   });
-  console.log(users);
+
+  const handleMakeAdmin = (id) => {
+    fetch(`http://localhost:5000/users/makeAdmin/${id}`, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount) {
+          toast.success("successfully added to admin");
+          refetch();
+        }
+      });
+  };
 
   return (
     <div>
@@ -83,7 +96,10 @@ const AllUsers = () => {
                     <td>{displayUser.role}</td>
                     <th>
                       {displayUser.role !== "admin" && (
-                        <button className="btn btn-success btn-sm">
+                        <button
+                          onClick={() => handleMakeAdmin(displayUser._id)}
+                          className="btn btn-success btn-sm"
+                        >
                           Make admin
                         </button>
                       )}
