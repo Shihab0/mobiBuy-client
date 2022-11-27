@@ -16,15 +16,18 @@ const Advertisement = () => {
   }
 
   return (
-    <div className=" mb-6 -mt-5">
+    <div className=" mb-6 mt-20">
       <h2 className="text-gray-50 text-center text-5xl font-bold mb-6">
         Advertised products
       </h2>
-      <div className="grid grid-cols-4 px-6">
+      <p className="text-center text-gray-50 -mt-3 font-semibold">
+        We offered this
+      </p>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-y-8 px-6 pt-6">
         {advertisedProducts &&
           advertisedProducts.map((advertisedProduct) => (
             <div key={advertisedProduct._id}>
-              <div className="max-w-xs p-6 rounded-md shadow-md bg-gray-900 text-gray-50">
+              <div className="  w-96 lg:max-w-sm p-6 mx-auto  rounded-md shadow-md bg-gray-900 text-gray-50">
                 <img
                   src={advertisedProduct.product_img}
                   alt=""

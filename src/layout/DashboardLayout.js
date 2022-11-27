@@ -2,7 +2,7 @@ import {
   CheckBadgeIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/solid";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { AuthContext } from "../Contexts/AuthProvider";
 import Footer from "../Shared/Footer/Footer";
@@ -88,7 +88,7 @@ const DashboardLayout = () => {
             </li>
             <li>
               {loadedUser.role === "admin" ? (
-                <Link>Reported Products </Link>
+                <Link to="/dashboard/reported"> Reported Products </Link>
               ) : (
                 <Link>Customer message</Link>
               )}

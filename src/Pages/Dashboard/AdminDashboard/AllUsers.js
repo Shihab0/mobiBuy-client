@@ -38,6 +38,24 @@ const AllUsers = () => {
       });
   };
 
+  const handleDelete = (id) => {
+    const confirmation = window.confirm("Are you sure to delete this user?");
+    if (!confirmation) {
+      return;
+    }
+
+    fetch(`http://localhost:5000/user/delete/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("User successfully deleted");
+          refetch();
+        }
+      });
+  };
+
   return (
     <div>
       <h1 className="text-2xl ml-3">All users</h1>
@@ -142,7 +160,10 @@ const AllUsers = () => {
                         )}
                     </th>
                     <th>
-                      <button className="btn btn-circle btn-sm">
+                      <button
+                        onClick={() => handleDelete(displayUser._id)}
+                        className="btn btn-circle btn-sm bg-red-600 hover:bg-red-800"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-6 w-6"

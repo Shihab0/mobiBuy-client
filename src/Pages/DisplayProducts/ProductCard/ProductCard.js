@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { CheckBadgeIcon, FlagIcon } from "@heroicons/react/24/solid";
+import toast from "react-hot-toast";
 
 const ProductCard = ({ product, setBookingProduct }) => {
   const [seller, setSeller] = useState("");
 
   const {
     product_img,
-    verified,
+    _id,
     seller_name,
     used_period,
     original_price,
@@ -27,6 +28,18 @@ const ProductCard = ({ product, setBookingProduct }) => {
         console.log(data[0], "data seller");
       });
   }, [email]);
+
+  const makeReport = (id) => {
+    fetch(`http://localhost:5000/makeReport/${id}`, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount) {
+          toast.success("successfully reported");
+        }
+      });
+  };
 
   return (
     <div>
@@ -119,6 +132,7 @@ const ProductCard = ({ product, setBookingProduct }) => {
               </button>
             </div>
             <button
+              onClick={() => makeReport(_id)}
               type="button"
               title="Report to admin"
               className="flex items-center justify-center"

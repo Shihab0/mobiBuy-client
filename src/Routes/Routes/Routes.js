@@ -3,6 +3,7 @@ import DashboardLayout from "../../layout/DashboardLayout";
 import Main from "../../layout/Main";
 import AddProduct from "../../Pages/AddProduct/AddProduct";
 import AllUsers from "../../Pages/Dashboard/AdminDashboard/AllUsers";
+import ReportedProducts from "../../Pages/Dashboard/AdminDashboard/ReportedProducts";
 import MyProducts from "../../Pages/Dashboard/SellerDasboard/MyProducts";
 import SellerDashboard from "../../Pages/Dashboard/SellerDasboard/SellerDashboard";
 import DisplayProducts from "../../Pages/DisplayProducts/DisplayProducts";
@@ -68,6 +69,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/reported",
+        element: (
+          <AdminRoute>
+            <ReportedProducts></ReportedProducts>
           </AdminRoute>
         ),
       },
