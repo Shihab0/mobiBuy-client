@@ -36,6 +36,24 @@ const MyProducts = () => {
       });
   };
 
+  const deleteMyProduct = (id) => {
+    const confirmation = window.confirm("Are you sure to delete this product?");
+    if (!confirmation) {
+      return;
+    }
+
+    fetch(`http://localhost:5000/myProduct/delete/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("User successfully deleted");
+          refetch();
+        }
+      });
+  };
+
   if (isLoading) {
     return <Loading></Loading>;
   }
@@ -92,7 +110,10 @@ const MyProducts = () => {
                       )}
                     </td>
                     <td>
-                      <button className="btn btn-sm hover:bg-red-700">
+                      <button
+                        onClick={() => deleteMyProduct(myProduct._id)}
+                        className="btn btn-sm hover:bg-red-700"
+                      >
                         Delete
                       </button>
                     </td>
