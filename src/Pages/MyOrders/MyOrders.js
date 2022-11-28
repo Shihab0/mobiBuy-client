@@ -24,8 +24,8 @@ const MyOrders = () => {
             <thead>
               <tr>
                 <th></th>
-                <th>Name</th>
                 <th>Product Name</th>
+                <th>Booking date</th>
                 <th>Price</th>
                 <th>Payment Status</th>
                 <th>Remove</th>
@@ -36,8 +36,8 @@ const MyOrders = () => {
                 myOrders.map((myOrder, i) => (
                   <tr key={myOrder._id}>
                     <th>{i + 1}</th>
-                    <td>{myOrder.name}</td>
                     <td>{myOrder.productName}</td>
+                    <td>{myOrder.bookingDate}</td>
                     <td>{myOrder.price}</td>
                     <td>
                       {" "}
