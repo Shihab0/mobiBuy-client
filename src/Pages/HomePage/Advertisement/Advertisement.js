@@ -1,7 +1,11 @@
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+import { AuthContext } from "../../../Contexts/AuthProvider";
 
 const Advertisement = () => {
+  const { user } = useContext(AuthContext);
   const [advertisedProducts, setAdvertisedProducts] = useState([]);
 
   useEffect(() => {
@@ -68,9 +72,21 @@ const Advertisement = () => {
                   </p>
                 </div>
                 <p>
-                  <button className="w-full py-0.5  btn btn-primary border-none rounded text-sm pl-0 text-gray-100">
-                    Book Now{" "}
-                  </button>
+                  {user?.uid ? (
+                    <label
+                      htmlFor="booking-modal"
+                      className="w-full py-0.5 btn btn-primary border-none rounded text-sm pl-0 text-gray-100"
+                    >
+                      Book Now{" "}
+                    </label>
+                  ) : (
+                    <label
+                      htmlFor="booking-modal"
+                      className="w-full py-0.5 btn btn-primary border-none rounded text-sm pl-0 text-gray-100"
+                    >
+                      <Link to="/login"> Login for booking </Link>
+                    </label>
+                  )}
                 </p>
               </div>
             </div>
