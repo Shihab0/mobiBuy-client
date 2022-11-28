@@ -1,9 +1,10 @@
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import toast from "react-hot-toast";
 
 const ReportedProducts = () => {
-  const { data: reportedProducts = [] } = useQuery({
+  const { data: reportedProducts = [], refetch } = useQuery({
     queryKey: ["reported"],
     queryFn: async () => {
       const res = await fetch("http://localhost:5000/dashboard/reported/");
@@ -11,7 +12,24 @@ const ReportedProducts = () => {
       return data;
     },
   });
-  console.log(reportedProducts);
+
+  const deleteReportedProduct = (id) => {
+    const confirmation = window.confirm("Are you sure to delete this product?");
+    if (!confirmation) {
+      return;
+    }
+
+    fetch(`http://localhost:5000/product/deleteReported/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("User successfully deleted");
+          refetch();
+        }
+      });
+  };
 
   return (
     <div>
@@ -41,7 +59,12 @@ const ReportedProducts = () => {
                     <td>{reportedProduct.seller_name}</td>
                     <td>{reportedProduct.price}</td>
                     <td>
-                      <button className="btn btn-circle btn-sm bg-red-600 hover:bg-red-800">
+                      <button
+                        onClick={() =>
+                          deleteReportedProduct(reportedProduct._id)
+                        }
+                        className="btn btn-circle btn-sm bg-red-600 hover:bg-red-800"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-6 w-6"

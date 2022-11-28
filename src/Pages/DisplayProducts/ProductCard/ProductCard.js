@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CheckBadgeIcon, FlagIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
+import { AuthContext } from "../../../Contexts/AuthProvider";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product, setBookingProduct }) => {
+  const { user } = useContext(AuthContext);
   const [seller, setSeller] = useState("");
 
   const {
@@ -69,7 +72,7 @@ const ProductCard = ({ product, setBookingProduct }) => {
             </div>
           </div>
           <div title="Verified seller">
-            {seller?.verified ? (
+            {seller?.verified === "true" ? (
               <>
                 <p className="text-blue-400">
                   <CheckBadgeIcon className=" w-6 inline" />
@@ -164,13 +167,22 @@ const ProductCard = ({ product, setBookingProduct }) => {
               <span className="text-base font-bold">Price: </span>
               <span className="text-xl text-yellow-400">{price} TK</span>
             </p>
-            <label
-              htmlFor="booking-modal"
-              onClick={() => setBookingProduct(product)}
-              className="w-full py-0.5 btn btn-primary border-none rounded text-sm pl-0 text-gray-100"
-            >
-              Book Now{" "}
-            </label>
+            {user?.uid ? (
+              <label
+                htmlFor="booking-modal"
+                onClick={() => setBookingProduct(product)}
+                className="w-full py-0.5 btn btn-primary border-none rounded text-sm pl-0 text-gray-100"
+              >
+                Book Now{" "}
+              </label>
+            ) : (
+              <label
+                htmlFor="booking-modal"
+                className="w-full py-0.5 btn btn-primary border-none rounded text-sm pl-0 text-gray-100"
+              >
+                <Link to="/login"> Login for booking </Link>
+              </label>
+            )}
           </div>
         </div>
       </div>
