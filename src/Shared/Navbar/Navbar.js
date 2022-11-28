@@ -31,7 +31,7 @@ const Navbar = () => {
       </li>
       {loadedUser.role !== "admin" && loadedUser.role !== "seller" && user && (
         <li>
-          <Link to="/orders">My Order</Link>
+          <Link to="/myOrders">My Order</Link>
         </li>
       )}
       {loadedUser.role === "seller" && (
@@ -50,7 +50,7 @@ const Navbar = () => {
         )}
       </li>
       <li>
-        <Link to="/about">About</Link>
+        <Link to="/blog">Blog</Link>
       </li>
       {user?.uid ? (
         <li>
