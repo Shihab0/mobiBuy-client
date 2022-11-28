@@ -42,7 +42,7 @@ const Login = () => {
           role: "buyer",
         };
 
-        fetch("http://localhost:5000/users", {
+        fetch("https://a12-mobi-buy-server-side.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",

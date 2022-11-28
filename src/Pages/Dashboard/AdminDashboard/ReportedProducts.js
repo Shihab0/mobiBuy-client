@@ -7,7 +7,9 @@ const ReportedProducts = () => {
   const { data: reportedProducts = [], refetch } = useQuery({
     queryKey: ["reported"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/dashboard/reported/");
+      const res = await fetch(
+        "https://a12-mobi-buy-server-side.vercel.app/dashboard/reported/"
+      );
       const data = await res.json();
       return data;
     },
@@ -19,9 +21,12 @@ const ReportedProducts = () => {
       return;
     }
 
-    fetch(`http://localhost:5000/product/deleteReported/${id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://a12-mobi-buy-server-side.vercel.app/product/deleteReported/${id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {

@@ -30,7 +30,9 @@ export const router = createBrowserRouter([
         path: "/displayProducts/:id",
         element: <DisplayProducts></DisplayProducts>,
         loader: async ({ params }) =>
-          fetch(`http://localhost:5000/products/${params.id}`),
+          fetch(
+            `https://a12-mobi-buy-server-side.vercel.app/products/${params.id}`
+          ),
       },
       {
         path: "/AddProduct",

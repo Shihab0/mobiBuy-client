@@ -6,7 +6,9 @@ const MyOrders = () => {
   const [myOrders, setMyOrders] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/myOrders?email=${user?.email}`)
+    fetch(
+      `https://a12-mobi-buy-server-side.vercel.app/myOrders?email=${user?.email}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setMyOrders(data);

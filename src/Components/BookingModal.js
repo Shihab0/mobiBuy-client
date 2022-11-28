@@ -30,7 +30,7 @@ const BookingModal = ({ bookingProduct }) => {
       seller_email: bookingProduct.email,
     };
 
-    fetch("http://localhost:5000/booking", {
+    fetch("https://a12-mobi-buy-server-side.vercel.app/booking", {
       method: "POST",
       headers: {
         "content-type": "application/json",

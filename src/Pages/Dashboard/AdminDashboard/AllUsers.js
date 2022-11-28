@@ -6,14 +6,16 @@ const AllUsers = () => {
   const { data: users = [], refetch } = useQuery({
     queryKey: ["allUsers"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/dashboard/users`);
+      const res = await fetch(
+        `https://a12-mobi-buy-server-side.vercel.app/dashboard/users`
+      );
       const data = await res.json();
       return data;
     },
   });
 
   const handleMakeAdmin = (id) => {
-    fetch(`http://localhost:5000/users/makeAdmin/${id}`, {
+    fetch(`https://a12-mobi-buy-server-side.vercel.app/users/makeAdmin/${id}`, {
       method: "PUT",
     })
       .then((res) => res.json())
@@ -26,9 +28,12 @@ const AllUsers = () => {
   };
 
   const handleVerify = (id) => {
-    fetch(`http://localhost:5000/seller/makeVerify/${id}`, {
-      method: "PUT",
-    })
+    fetch(
+      `https://a12-mobi-buy-server-side.vercel.app/seller/makeVerify/${id}`,
+      {
+        method: "PUT",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount) {
@@ -44,7 +49,7 @@ const AllUsers = () => {
       return;
     }
 
-    fetch(`http://localhost:5000/user/delete/${id}`, {
+    fetch(`https://a12-mobi-buy-server-side.vercel.app/user/delete/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

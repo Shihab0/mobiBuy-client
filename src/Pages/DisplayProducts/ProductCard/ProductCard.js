@@ -24,7 +24,7 @@ const ProductCard = ({ product, setBookingProduct }) => {
   } = product;
 
   useEffect(() => {
-    fetch(`http://localhost:5000/seller?email=${email}`)
+    fetch(`https://a12-mobi-buy-server-side.vercel.app/seller?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
         setSeller(data[0]);
@@ -33,7 +33,7 @@ const ProductCard = ({ product, setBookingProduct }) => {
   }, [email]);
 
   const makeReport = (id) => {
-    fetch(`http://localhost:5000/makeReport/${id}`, {
+    fetch(`https://a12-mobi-buy-server-side.vercel.app/makeReport/${id}`, {
       method: "PUT",
     })
       .then((res) => res.json())

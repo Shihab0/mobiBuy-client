@@ -16,7 +16,7 @@ const MyProducts = () => {
     queryKey: ["myProducts"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/dashboard/myProducts?email=${user?.email}`
+        `https://a12-mobi-buy-server-side.vercel.app/dashboard/myProducts?email=${user?.email}`
       );
       const data = await res.json();
       return data;
@@ -24,7 +24,7 @@ const MyProducts = () => {
   });
 
   const handelBoost = (id) => {
-    fetch(`http://localhost:5000/boost/${id}`, {
+    fetch(`https://a12-mobi-buy-server-side.vercel.app/boost/${id}`, {
       method: "PUT",
     })
       .then((res) => res.json())
@@ -42,9 +42,12 @@ const MyProducts = () => {
       return;
     }
 
-    fetch(`http://localhost:5000/myProduct/delete/${id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://a12-mobi-buy-server-side.vercel.app/myProduct/delete/${id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {

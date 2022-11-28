@@ -12,7 +12,7 @@ const DisplayProducts = () => {
   // const { data: products = [] } = useQuery({
   //   queryKey: ["products"],
   //   queryFn: async () => {
-  //     const res = await fetch("http://localhost:5000/products/1");
+  //     const res = await fetch("https://a12-mobi-buy-server-side.vercel.app/products/1");
   //     const data = await res.json();
   //     return data;
   //   },

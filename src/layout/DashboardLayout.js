@@ -13,7 +13,7 @@ const DashboardLayout = () => {
 
   // const [loadedUser, setLoadedUser] = useState([]);
   // useEffect(() => {
-  //   fetch(`http://localhost:5000/dashboard?email=${user?.email}`)
+  //   fetch(`https://a12-mobi-buy-server-side.vercel.app/dashboard?email=${user?.email}`)
   //     .then((res) => res.json())
   //     .then((data) => setLoadedUser(data))
   //     .catch((err) => console.log(err));

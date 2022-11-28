@@ -9,7 +9,9 @@ const Advertisement = () => {
   const [advertisedProducts, setAdvertisedProducts] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/advertised?advertised=${true}`)
+    fetch(
+      `https://a12-mobi-buy-server-side.vercel.app/advertised?advertised=${true}`
+    )
       .then((res) => res.json())
       .then((data) => setAdvertisedProducts(data));
   }, []);
