@@ -16,6 +16,7 @@ import SignUp from "../../Pages/SignUp and Login/SignUp";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoute from "../PrivateRoutes/PrivateRoute";
 import SellerRoute from "../SellerRoute/SellerRoute";
+import SellerRoute from "../SellerRoute/SellerRoute";
 
 export const router = createBrowserRouter([
   {
